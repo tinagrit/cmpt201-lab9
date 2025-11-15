@@ -49,11 +49,9 @@ void *handle_client(void *arg) {
   int bytes_read;
 
   while ((bytes_read = read(cfd, buffer, BUF_SIZE)) > 0) {
-    buffer[bytes_read] = '\0';
-
     char toPrint[BUF_SIZE];
-    snprintf(toPrint, sizeof(toPrint), "Msg #\t%d; Client ID %d: %s",
-             total_message_count, client_id, buffer);
+    snprintf(toPrint, sizeof(toPrint), "Msg #\t%d; Client ID %d: %s\n",
+                 total_message_count, client_id, buffer);
     write(STDOUT_FILENO, toPrint, strlen(toPrint));
 
     pthread_mutex_lock(&count_mutex);

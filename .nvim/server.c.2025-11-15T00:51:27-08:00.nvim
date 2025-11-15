@@ -40,21 +40,18 @@ void *handle_client(void *arg) {
   int client_id = client->client_id;
 
   char welcome[BUF_SIZE];
-  int welcomeLength =
-      snprintf(welcome, sizeof(welcome),
-               "New client created! ID %d on socket FD %d\n", client_id, cfd);
+  int welcomeLength = snprintf(welcome, sizeof(welcome), "New client created! ID %d on socket FD %d\n", client_id, cfd);
   write(STDOUT_FILENO, welcome, welcomeLength);
 
   char buffer[BUF_SIZE];
   int bytes_read;
 
   while ((bytes_read = read(cfd, buffer, BUF_SIZE)) > 0) {
-    buffer[bytes_read] = '\0';
-
     char toPrint[BUF_SIZE];
-    snprintf(toPrint, sizeof(toPrint), "Msg #\t%d; Client ID %d: %s",
-             total_message_count, client_id, buffer);
-    write(STDOUT_FILENO, toPrint, strlen(toPrint));
+    int length = snprintf(toPrint, sizeof(toPrint), "Msg #\t%d; Client ID %d: %s\n",
+        total_message_count, client_id, buffer);
+
+    write(STDOUT_FILENO, toPrint, length);
 
     pthread_mutex_lock(&count_mutex);
     total_message_count++;
@@ -63,8 +60,7 @@ void *handle_client(void *arg) {
 
   if (bytes_read == 0) {
     char toPrint[BUF_SIZE];
-    int length = snprintf(toPrint, sizeof(toPrint),
-                          "Ending thread for client %d\n", client_id);
+    int length = snprintf(toPrint, sizeof(toPrint), "Ending thread for client %d\n", client_id);
     write(STDOUT_FILENO, toPrint, length);
     close(cfd);
     return NULL;
@@ -103,7 +99,7 @@ int main() {
     // TODO: create a new thread when a new connection is encountered
     // TODO: call handle_client() when launching a new thread, and provide
     // client_info
-
+    
     int connected_fd = accept(sfd, NULL, NULL);
     if (connected_fd == -1) {
       handle_error("accept");

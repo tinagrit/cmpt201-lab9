@@ -1,17 +1,15 @@
 /*
 Questions to answer at top of client.c:
 (You should not need to change the code in client.c)
-1. What is the address of the server it is trying to connect to (IP address and
-port number).
+1. What is the address of the server it is trying to connect to (IP address and port number).
    - IP Address 127.0.0.1 at port 8000
 2. Is it UDP or TCP? How do you know?
    - It is TCP, since SOCK_STREAM is used in creating the socket.
-3. The client is going to send some data to the server. Where does it get this
-data from? How can you tell in the code?
+3. The client is going to send some data to the server. Where does it get this data from? How can you tell in the code?
    - The data is from the user's terminal input. read() is used on STDIN.
 4. How does the client program end? How can you tell that in the code?
-   - The program ends when the the read() reads less than 1 byte, i.e. the user
-presses ENTER without typing. The while loop keeps iterating when num_read > 1.
+   - The program ends when the the read() reads less than 1 byte, i.e. the user presses ENTER
+   without typing. The while loop keeps iterating when num_read > 1.
 */
 
 #include <arpa/inet.h>

@@ -52,7 +52,7 @@ void *handle_client(void *arg) {
     buffer[bytes_read] = '\0';
 
     char toPrint[BUF_SIZE];
-    snprintf(toPrint, sizeof(toPrint), "Msg #\t%d; Client ID %d: %s",
+    snprintf(toPrint, sizeof(toPrint), "Msg #\t%d; Client ID %d: %s\n",
              total_message_count, client_id, buffer);
     write(STDOUT_FILENO, toPrint, strlen(toPrint));
 
